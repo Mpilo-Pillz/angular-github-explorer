@@ -25,4 +25,10 @@ export class GithubService {
       `${this.baseUrl}/repos/${owner}/${repo}`
     );
   }
+
+  getContributors(owner: string, repo: string): Observable<any> {
+    return this.http.get<any>(
+      `${this.baseUrl}/repos/${owner}/${repo}/contributors`
+    );
+  }
 }
