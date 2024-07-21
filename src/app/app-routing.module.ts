@@ -9,6 +9,13 @@ const routes: Routes = [
         (module) => module.RepositoriesModule
       ),
   },
+  {
+    path: 'repositories',
+    loadChildren: () =>
+      import('./features/issues/issues.module').then(
+        (module) => module.IssuesModule
+      ),
+  },
 ];
 
 @NgModule({
