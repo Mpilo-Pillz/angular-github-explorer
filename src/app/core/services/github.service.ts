@@ -15,4 +15,13 @@ export class GithubService {
     const url = `${this.baseUrl}?q=${query}`;
     return this.http.get<RepositoryResponse>(url);
   }
+
+  getRepositoryDetails(
+    owner: string,
+    repo: string
+  ): Observable<RepositoryResponse> {
+    return this.http.get<RepositoryResponse>(
+      `${this.baseUrl}/repos/${owner}/${repo}`
+    );
+  }
 }
