@@ -1,0 +1,86 @@
+<div *ngIf="repository" class="container mx-auto p-4">
+  <h1 class="text-2xl font-bold mb-4">{{ repository.name }}</h1>
+  <p class="text-gray-700 mb-4">{{ repository.description }}</p>
+  <div class="flex items-center space-x-6 mb-4">
+    <div class="flex items-center space-x-1">
+      <svg
+        class="w-5 h-5 text-secondary"
+        fill="currentColor"
+        viewBox="0 0 20 20"
+      >
+        <path
+          d="M8 2a6 6 0 00-4.577 9.854c.426.424 1.08.425 1.507-.002a1.052 1.052 0 01.001-1.487 3 3 0 013.516-.036c.403.385 1.07.384 1.47.008a4 4 0 10-5.921-5.921c-.385.402-.384 1.07-.008 1.47a3 3 0 01-.037 3.516c-.428.426-.427 1.081-.002 1.507A6 6 0 108 2z"
+        ></path>
+      </svg>
+      <span>{{ repository.stargazers_count }} Stars</span>
+    </div>
+    <div class="flex items-center space-x-1">
+      <svg
+        class="w-5 h-5 text-secondary"
+        fill="currentColor"
+        viewBox="0 0 20 20"
+      >
+        <path
+          d="M9 2a7 7 0 00-7 7c0 3.04 1.903 5.644 4.558 6.64.327.127.682.035.895-.231l.04-.057c.29-.407.865-.555 1.314-.352a7.004 7.004 0 0012.617-.56 7 7 0 00-7-7c-2.481 0-4.66 1.323-5.95 3.256-.141.203-.441.259-.653.117-.083-.053-.167-.106-.253-.156A5.001 5.001 0 017 9a5 5 0 115 5c0-.151-.003-.3-.01-.45-.02-.478.145-.947.43-1.31.104-.131.214-.258.33-.381a6.998 6.998 0 00-5.666-11.44zm2 13a5 5 0 01-5-5 5 5 0 015-5 5 5 0 010 10z"
+        ></path>
+      </svg>
+      <span>{{ repository.forks_count }} Forks</span>
+    </div>
+    <div class="flex items-center space-x-1">
+      <svg
+        class="w-5 h-5 text-secondary"
+        fill="currentColor"
+        viewBox="0 0 20 20"
+      >
+        <path
+          d="M3 1a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V6.414a2 2 0 00-.586-1.414l-4.828-4.828A2 2 0 0012.586 0H3zm4.293 6.293a1 1 0 011.414 0L10 8.586V3a1 1 0 012 0v5.586l1.293-1.293a1 1 0 111.414 1.414L12 12.414l-4.707-4.707a1 1 0 010-1.414z"
+        ></path>
+      </svg>
+      <span>{{ repository.open_issues_count }} Open Issues</span>
+    </div>
+  </div>
+  <a
+    [href]="repository.html_url"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="text-blue-500 hover:underline"
+  >
+    View on GitHub
+  </a>
+</div>
+<div *ngIf="!repository" class="container mx-auto p-4">
+  <p class="text-secondary">Loading...</p>
+</div>
+
+<ng-container *ngIf="repository?.owner; else noRepository">
+  <img
+    [src]="repository?.owner?.avatar_url"
+    alt="Owner's Avatar"
+    class="w-16 h-16 rounded-full"
+  />
+  <p class="font-semibold">{{ repository?.owner?.login }}</p>
+  <ng-container *ngIf="contributors.length > 0; else noContributors">
+    <h2 class="text-xl font-bold mt-8 mb-4">Contributors</h2>
+    <div class="grid grid-cols-2 gap-4">
+      <div
+        *ngFor="let contributor of contributors"
+        class="flex items-center space-x-2"
+      >
+        <img
+          [src]="contributor.avatar_url"
+          class="w-8 h-8 rounded-full"
+          alt="Contributor's Avatar"
+        />
+        <p>{{ contributor.login }}</p>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
+
+<ng-template #noRepository>
+  <p class="text-danger">No repository owner information available.</p>
+</ng-template>
+
+<ng-template #noContributors>
+  <p class="text-secondary">No contributors found for this repository.</p>
+</ng-template>
