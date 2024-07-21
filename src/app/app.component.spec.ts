@@ -1,13 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { SearchBarComponent } from './shared/components/search-bar/search-bar.component';
+import { RepositoryListComponent } from './features/repositories/components/repository-list/repository-list.component';
+import { RepositoriesModule } from './features/repositories/repositories.module';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
-      declarations: [AppComponent, SearchBarComponent],
+      imports: [RouterTestingModule, RepositoriesModule],
+      declarations: [AppComponent, RepositoryListComponent],
     }).compileComponents();
   });
 

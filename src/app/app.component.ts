@@ -7,8 +7,4 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'angular-github-explorer';
-
-  onSearch(query: string) {
-    console.log(query);
-  }
 }
