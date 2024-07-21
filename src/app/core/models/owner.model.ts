@@ -5,4 +5,5 @@ export interface Owner {
   url: string;
   html_url: string;
   followers_url: string;
+  login: string;
 }
