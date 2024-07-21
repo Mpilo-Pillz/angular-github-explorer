@@ -29,3 +29,9 @@ export interface Repository {
   default_branch: string;
   score: number;
 }
+
+export interface RepositoryResponse {
+  incomplete_results: boolean;
+  items: Repository[];
+  total_count: number;
+}
