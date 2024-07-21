@@ -5,6 +5,8 @@ import { Repository } from '../../../../core/models/repository.model';
 import { switchMap } from 'rxjs';
 import { Contributor } from '../../../../core/models/contributor.model';
 
+const OWNER = 'owner';
+const REPO = 'repo';
 @Component({
   selector: 'app-repository-details',
   templateUrl: './repository-details.component.html',
@@ -18,21 +20,26 @@ export class RepositoryDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const owner = this.route.snapshot.paramMap.get('owner');
-    const repo = this.route.snapshot.paramMap.get('repo');
-    if (owner && repo) {
-      this.githubService
-        .getRepositoryDetails(owner, repo)
-        .pipe(
-          switchMap((repositoryResponse: any) => {
-            this.repository = repositoryResponse;
-            return this.githubService.getContributors(owner, repo);
-          })
-        )
-        .subscribe((contributors: Contributor[]) => {
-          console.log(contributors);
-          this.contributors = contributors;
-        });
+    const owner = this.route.snapshot.paramMap.get(OWNER);
+    const repo = this.route.snapshot.paramMap.get(REPO);
+
+    if (!owner || !repo) {
+      // TODO: show error using a toast or snackbar or modal
+      console.error('Owner or repository not provided.');
+      return;
     }
+
+    this.githubService
+      .getRepositoryDetails(owner, repo)
+      .pipe(
+        switchMap((repositoryDetails: Repository) => {
+          this.repository = repositoryDetails;
+          return this.githubService.getContributors(owner, repo);
+        })
+      )
+      .subscribe((contributors: Contributor[]) => {
+        console.log(contributors);
+        this.contributors = contributors;
+      });
   }
 }
