@@ -1,12 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GithubService {
-  private baseUrl: string = 'https://api.github.com/search/repositories';
+  private baseUrl: string = environment.githubApiUrl;
+
   constructor(private http: HttpClient) {}
 
   searchRepositories(query: string): Observable<any> {
