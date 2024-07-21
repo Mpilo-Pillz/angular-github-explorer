@@ -7,8 +7,7 @@ import { environment } from '../../environments/environment';
   providedIn: 'root',
 })
 export class GithubService {
-  private baseUrl: string = environment.githubApiUrl;
-
+  private baseUrl: string = `${environment.githubApiUrl}/search/repositories`;
   constructor(private http: HttpClient) {}
 
   searchRepositories(query: string): Observable<any> {
