@@ -16,6 +16,7 @@ export class RepositoryListComponent {
       .searchRepositories(query)
       .subscribe((repositoryResponse) => {
         console.log(repositoryResponse);
+        this.repositories = repositoryResponse.items;
       });
   }
 }
