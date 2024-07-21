@@ -6,7 +6,12 @@ module.exports = {
   content: ["./src/**/*.{html,ts}"],
   theme: {
     extend: {
-      colors: {},
+      colors: {
+        primary: colors.teal[500],
+        secondary: colors.gray[500],
+        danger: colors.red[500],
+        warning: colors.yellow[500],
+      },
     },
   },
   plugins: [],
