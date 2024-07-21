@@ -1,0 +1,15 @@
+<div class="flex justify-center mt-4">
+  <input
+    type="text"
+    class="border rounded py-2 px-4 w-1/2"
+    placeholder="Search GitHub Repositories..."
+    [(ngModel)]="query"
+    (keyup.enter)="onSearch()"
+  />
+  <button
+    class="ml-2 bg-teal-900 text-white py-2 px-4 rounded"
+    (click)="onSearch()"
+  >
+    Search
+  </button>
+</div>
