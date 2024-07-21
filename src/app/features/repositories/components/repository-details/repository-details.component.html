@@ -4,7 +4,7 @@
   <div class="flex items-center space-x-6 mb-4">
     <div class="flex items-center space-x-1">
       <svg
-        class="w-5 h-5 text-gray-500"
+        class="w-5 h-5 text-secondary"
         fill="currentColor"
         viewBox="0 0 20 20"
       >
@@ -16,7 +16,7 @@
     </div>
     <div class="flex items-center space-x-1">
       <svg
-        class="w-5 h-5 text-gray-500"
+        class="w-5 h-5 text-secondary"
         fill="currentColor"
         viewBox="0 0 20 20"
       >
@@ -28,7 +28,7 @@
     </div>
     <div class="flex items-center space-x-1">
       <svg
-        class="w-5 h-5 text-gray-500"
+        class="w-5 h-5 text-secondary"
         fill="currentColor"
         viewBox="0 0 20 20"
       >
@@ -49,22 +49,38 @@
   </a>
 </div>
 <div *ngIf="!repository" class="container mx-auto p-4">
-  <p class="text-gray-500">Loading...</p>
+  <p class="text-secondary">Loading...</p>
 </div>
 
-<ng-container *ngIf="repository?.owner">
-  <img [src]="repository?.owner?.avatar_url" />
-  <p>{{ repository?.owner?.login }}</p>
-  @if (contributors.length > 0) {
-  <h2 class="text-xl font-bold mt-8 mb-4">Contributors</h2>
-  <div class="grid grid-cols-2 gap-4">
-    <div
-      *ngFor="let contributor of contributors"
-      class="flex items-center space-x-2"
-    >
-      <img [src]="contributor.avatar_url" class="w-8 h-8 rounded-full" />
-      <p>{{ contributor.login }}</p>
+<ng-container *ngIf="repository?.owner; else noRepository">
+  <img
+    [src]="repository?.owner?.avatar_url"
+    alt="Owner's Avatar"
+    class="w-16 h-16 rounded-full"
+  />
+  <p class="font-semibold">{{ repository?.owner?.login }}</p>
+  <ng-container *ngIf="contributors.length > 0; else noContributors">
+    <h2 class="text-xl font-bold mt-8 mb-4">Contributors</h2>
+    <div class="grid grid-cols-2 gap-4">
+      <div
+        *ngFor="let contributor of contributors"
+        class="flex items-center space-x-2"
+      >
+        <img
+          [src]="contributor.avatar_url"
+          class="w-8 h-8 rounded-full"
+          alt="Contributor's Avatar"
+        />
+        <p>{{ contributor.login }}</p>
+      </div>
     </div>
-  </div>
-  }
+  </ng-container>
 </ng-container>
+
+<ng-template #noRepository>
+  <p class="text-danger">No repository owner information available.</p>
+</ng-template>
+
+<ng-template #noContributors>
+  <p class="text-secondary">No contributors found for this repository.</p>
+</ng-template>
