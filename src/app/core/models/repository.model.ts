@@ -24,6 +24,7 @@ export interface Repository {
   web_commit_signoff_required: boolean;
   visibility: string;
   forks: number;
+  forks_count: number;
   open_issues: number;
   watchers: number;
   default_branch: string;
