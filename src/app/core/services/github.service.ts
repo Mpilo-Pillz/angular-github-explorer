@@ -8,11 +8,12 @@ import { RepositoryResponse } from '../models/repository.model';
   providedIn: 'root',
 })
 export class GithubService {
-  private baseUrl: string = `${environment.githubApiUrl}/search/repositories`;
+  private baseUrl: string = `${environment.githubApiUrl}`;
+  private searchUrl: string = '/search/repositories';
   constructor(private http: HttpClient) {}
 
   searchRepositories(query: string): Observable<RepositoryResponse> {
-    const url = `${this.baseUrl}?q=${query}`;
+    const url = `${this.baseUrl}${this.searchUrl}?q=${query}`;
     return this.http.get<RepositoryResponse>(url);
   }
 
