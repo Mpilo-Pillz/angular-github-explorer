@@ -3,10 +3,7 @@ import { NgModule } from '@angular/core';
 import { IssuesListComponent } from './components/issues-list/issues-list.component';
 
 const routes: Routes = [
-  {
-    path: 'issues',
-    component: IssuesListComponent,
-  },
+  { path: ':owner/:repo/issues', component: IssuesListComponent },
 ];
 
 @NgModule({

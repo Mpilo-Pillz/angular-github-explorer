@@ -1,1 +1,42 @@
-<p>issues-list works!</p>
+<div class="container mx-auto p-4">
+  <div class="flex justify-between items-center mb-4">
+    <h2 class="text-2xl font-bold">Issues</h2>
+    <div>
+      <button
+        class="px-4 py-2 mr-2 text-white bg-blue-500 rounded"
+        [class.bg-gray-500]="state === 'all'"
+        (click)="onStateChange('all')"
+      >
+        All
+      </button>
+      <button
+        class="px-4 py-2 mr-2 text-white bg-green-500 rounded"
+        [class.bg-gray-500]="state === 'open'"
+        (click)="onStateChange('open')"
+      >
+        Open
+      </button>
+      <button
+        class="px-4 py-2 text-white bg-red-500 rounded"
+        [class.bg-gray-500]="state === 'closed'"
+        (click)="onStateChange('closed')"
+      >
+        Closed
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="issues.length > 0" class="grid gap-4">
+    <div *ngFor="let issue of issues" class="border-b border-gray-200 py-4">
+      <h3 class="text-xl font-semibold">{{ issue.title }}</h3>
+      <p class="text-gray-700">{{ issue.body }}</p>
+      <p class="text-sm text-gray-500">
+        #{{ issue.number }} opened by {{ issue.user.login }}
+      </p>
+    </div>
+  </div>
+
+  <div *ngIf="issues.length === 0" class="text-center text-gray-500">
+    No issues found.
+  </div>
+</div>
