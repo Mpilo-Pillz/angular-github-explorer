@@ -10,7 +10,7 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'repositories',
+    path: 'issues',
     loadChildren: () =>
       import('./features/issues/issues.module').then(
         (module) => module.IssuesModule
