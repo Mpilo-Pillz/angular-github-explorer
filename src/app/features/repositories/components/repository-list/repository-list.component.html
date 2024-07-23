@@ -31,7 +31,19 @@
             </span>
           </div>
           <div class="flex space-x-6">
-            <div class="flex items-center space-x-1">
+            <app-repo-icon
+              icon="star"
+              [count]="repo.stargazers_count"
+            ></app-repo-icon>
+            <app-repo-icon
+              icon="fork"
+              [count]="repo.forks_count"
+            ></app-repo-icon>
+            <app-repo-icon
+              icon="issue"
+              [count]="repo.open_issues_count"
+            ></app-repo-icon>
+            <!-- <div class="flex items-center space-x-1">
               <svg
                 class="w-5 h-5 text-seconday"
                 fill="currentColor"
@@ -66,7 +78,7 @@
                 ></path>
               </svg>
               <span>{{ repo.open_issues_count }}</span>
-            </div>
+            </div> -->
           </div>
         </div>
       </li>
