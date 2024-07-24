@@ -8,9 +8,11 @@ module.exports = {
     extend: {
       colors: {
         primary: colors.teal[500],
-        secondary: colors.gray[500],
+        secondary: colors.gray[600],
         danger: colors.red[500],
         warning: colors.yellow[500],
+        lighter: colors.gray[200],
+        darker: colors.gray[900],
       },
     },
   },
