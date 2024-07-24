@@ -1,0 +1,8 @@
+<span class="flex items-center">
+  <ng-container [ngSwitch]="icon">
+    <span *ngSwitchCase="'star'">⭐</span>
+    <span *ngSwitchCase="'fork'">🍴</span>
+    <span *ngSwitchCase="'issue'">🐛</span>
+  </ng-container>
+  <span class="ml-1">{{ count }}</span>
+</span>
