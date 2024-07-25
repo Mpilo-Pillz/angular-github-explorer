@@ -12,6 +12,7 @@ module.exports = {
         danger: colors.red[500],
         warning: colors.yellow[500],
         success: colors.lime[500],
+        info: colors.blue[500],
         lighter: colors.gray[200],
         darker: colors.gray[900],
         tertiary: colors.amber[500],

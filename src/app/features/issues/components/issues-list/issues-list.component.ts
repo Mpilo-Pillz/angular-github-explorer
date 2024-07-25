@@ -1,13 +1,14 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
-import { GithubService } from '../../../../core/services/github.service';
-import { Issue, IssueState } from '../../../../core/models/issue.model';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Issue, IssueState } from '../../../../core/models/issue.model';
+import { GithubService } from '../../../../core/services/github.service';
+import {
+  ISSUE_STATE_ALL,
+  ISSUE_STATE_CLOSED,
+  ISSUE_STATE_OPEN,
+  OWNER,
+  REPO,
+} from '../../../../shared/models/constants';
 
 @Component({
   selector: 'app-issues-list',
@@ -18,7 +19,10 @@ export class IssuesListComponent implements OnInit {
   repoName: string | null = null;
 
   issues: Issue[] = [];
-  state: IssueState = 'all';
+  issueState: IssueState = ISSUE_STATE_ALL;
+  open = ISSUE_STATE_OPEN;
+  closed = ISSUE_STATE_CLOSED;
+  all = ISSUE_STATE_ALL;
 
   constructor(
     private route: ActivatedRoute,
@@ -26,13 +30,13 @@ export class IssuesListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.repoOwner = this.route.snapshot.paramMap.get('owner');
-    this.repoName = this.route.snapshot.paramMap.get('repo');
+    this.repoOwner = this.route.snapshot.paramMap.get(OWNER);
+    this.repoName = this.route.snapshot.paramMap.get(REPO);
     this.fetchIssues();
 
     this.route.paramMap.subscribe((params) => {
-      this.repoOwner = params.get('owner');
-      this.repoName = params.get('repo');
+      this.repoOwner = params.get(OWNER);
+      this.repoName = params.get(REPO);
       this.fetchIssues();
     });
   }
@@ -40,17 +44,15 @@ export class IssuesListComponent implements OnInit {
   fetchIssues(): void {
     if (this.repoOwner && this.repoName) {
       this.githubService
-        .getRepositoryIssues(this.repoOwner, this.repoName, this.state)
+        .getRepositoryIssues(this.repoOwner, this.repoName, this.issueState)
         .subscribe((data) => {
-          console.log('ISSSUUEE==>', data);
-
           this.issues = data;
         });
     }
   }
 
-  onStateChange(newState: 'open' | 'closed' | 'all'): void {
-    this.state = newState;
+  onStateChange(newState: IssueState): void {
+    this.issueState = newState;
     this.fetchIssues();
   }
 }
