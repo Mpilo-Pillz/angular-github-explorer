@@ -25,12 +25,6 @@ export class IssuesListComponent implements OnInit {
     private githubService: GithubService
   ) {}
 
-  // ngOnChanges(changes: SimpleChanges): void {
-  //   if (changes['repoOwner'] || changes['repoName'] || changes['state']) {
-  //     this.fetchIssues();
-  //   }
-  // }
-
   ngOnInit(): void {
     this.repoOwner = this.route.snapshot.paramMap.get('owner');
     this.repoName = this.route.snapshot.paramMap.get('repo');
