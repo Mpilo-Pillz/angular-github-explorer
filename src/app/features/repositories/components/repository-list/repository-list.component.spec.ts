@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RepositoryListComponent } from './repository-list.component';
 import { SearchBarComponent } from '../../../../shared/components/search-bar/search-bar.component';
 import { SharedModule } from '../../../../shared/shared.module';
+import { RouterModule } from '@angular/router';
 
 describe('RepositoryListComponent', () => {
   let component: RepositoryListComponent;
@@ -9,7 +10,7 @@ describe('RepositoryListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SharedModule],
+      imports: [SharedModule, RouterModule.forRoot([])],
       declarations: [RepositoryListComponent, SearchBarComponent],
     }).compileComponents();
 

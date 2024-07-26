@@ -6,10 +6,11 @@
     [(ngModel)]="query"
     (keyup.enter)="onSearch()"
   />
-  <button
-    class="ml-2 bg-primary text-white py-2 px-4 rounded"
-    (click)="onSearch()"
-  >
-    Search
-  </button>
+
+  <app-button
+    label="Search"
+    variant="primary"
+    (clicked)="onSearch()"
+    class="ml-2"
+  />
 </div>
