@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Issue, IssueState } from '../../../../core/models/issue.model';
 import { GithubService } from '../../../../core/services/github.service';
@@ -9,14 +9,17 @@ import {
   OWNER,
   REPO,
 } from '../../../../shared/models/constants';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-issues-list',
   templateUrl: './issues-list.component.html',
 })
-export class IssuesListComponent implements OnInit {
+export class IssuesListComponent implements OnInit, OnDestroy {
+  loading: boolean = false;
   repoOwner: string | null = null;
   repoName: string | null = null;
+  private destroy$ = new Subject<void>();
 
   issues: Issue[] = [];
   issueState: IssueState = ISSUE_STATE_ALL;
@@ -30,6 +33,7 @@ export class IssuesListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loading = true;
     this.repoOwner = this.route.snapshot.paramMap.get(OWNER);
     this.repoName = this.route.snapshot.paramMap.get(REPO);
     this.fetchIssues();
@@ -45,8 +49,16 @@ export class IssuesListComponent implements OnInit {
     if (this.repoOwner && this.repoName) {
       this.githubService
         .getRepositoryIssues(this.repoOwner, this.repoName, this.issueState)
-        .subscribe((data) => {
-          this.issues = data;
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (issues) => {
+            this.issues = issues;
+            this.loading = false;
+          },
+          error: (error) => {
+            alert(error);
+            this.loading = false;
+          },
         });
     }
   }
@@ -54,5 +66,9 @@ export class IssuesListComponent implements OnInit {
   onStateChange(newState: IssueState): void {
     this.issueState = newState;
     this.fetchIssues();
+  }
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

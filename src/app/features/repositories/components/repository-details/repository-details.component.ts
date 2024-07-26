@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GithubService } from '../../../../core/services/github.service';
 import { Repository } from '../../../../core/models/repository.model';
-import { switchMap } from 'rxjs';
+import { Subject, switchMap, takeUntil } from 'rxjs';
 import { Contributor } from '../../../../core/models/contributor.model';
 
 const OWNER = 'owner';
@@ -11,9 +11,11 @@ const REPO = 'repo';
   selector: 'app-repository-details',
   templateUrl: './repository-details.component.html',
 })
-export class RepositoryDetailsComponent implements OnInit {
+export class RepositoryDetailsComponent implements OnInit, OnDestroy {
   repository: Repository | null = null;
   contributors: Contributor[] = [];
+  private destroy$ = new Subject<void>();
+
   constructor(
     private route: ActivatedRoute,
     private githubService: GithubService
@@ -24,8 +26,7 @@ export class RepositoryDetailsComponent implements OnInit {
     const repo = this.route.snapshot.paramMap.get(REPO);
 
     if (!owner || !repo) {
-      // TODO: show error using a toast or snackbar or modal
-      console.error('Owner or repository not provided.');
+      alert('Owner or repository not provided.');
       return;
     }
 
@@ -35,11 +36,16 @@ export class RepositoryDetailsComponent implements OnInit {
         switchMap((repositoryDetails: Repository) => {
           this.repository = repositoryDetails;
           return this.githubService.getContributors(owner, repo);
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe((contributors: Contributor[]) => {
-        console.log(contributors);
         this.contributors = contributors;
       });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
