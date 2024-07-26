@@ -24,8 +24,7 @@ export class RepositoryDetailsComponent implements OnInit {
     const repo = this.route.snapshot.paramMap.get(REPO);
 
     if (!owner || !repo) {
-      // TODO: show error using a toast or snackbar or modal
-      console.error('Owner or repository not provided.');
+      alert('Owner or repository not provided.');
       return;
     }
 
