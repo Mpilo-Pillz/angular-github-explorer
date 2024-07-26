@@ -1,6 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-type Variant = 'primary' | 'secondary' | 'info' | 'warning' | 'success';
+type Variant =
+  | 'primary'
+  | 'secondary'
+  | 'info'
+  | 'warning'
+  | 'success'
+  | 'danger';
 
 @Component({
   selector: 'app-button',
